@@ -1,0 +1,62 @@
+# Unity 생성 폴더
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# MemoryCaptures는 프로파일링 데이터
+[Mm]emoryCaptures/
+
+# Asset meta data는 필요하므로 무시하지 않음
+!/[Aa]ssets/**/*.meta
+
+# 충돌 파일
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Unity3D 생성 파일
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity3D 자동 생성 크래시 리포트
+sysinfo.txt
+
+# 빌드
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Crashlytics 데이터
+crashlytics-build.properties
+
+# OS 생성 파일
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE 설정
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.sublime-workspace
