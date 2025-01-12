@@ -7,6 +7,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float JumpForce;
     private const int MAX_JUMP_COUNT = 3;
     private const float GRAVITY_SCALE = 2.3f;
+    private const int MAX_LIVES = 3;
+    public int lives = MAX_LIVES;
+    private bool isGodMode = false;
 
     [Header("Components")]
     [SerializeField] private Rigidbody2D PlayerRigidBody;
@@ -46,16 +49,52 @@ public class Player : MonoBehaviour
     {
         if (collider.gameObject.tag == "Enemy")
         {
+            if (isGodMode)
+            {
+                return;
+            }
 
+            Hit(collider.gameObject);
+            return;
         }
 
         if (collider.gameObject.tag == "Food")
         {
-
+            Heal(collider.gameObject);
         }
         if (collider.gameObject.tag == "GoldenFood")
         {
-
+            GodMode(collider.gameObject);
         }
+    }
+
+    private void Hit(GameObject enemy)
+    {
+        if (lives > 0 && !isGodMode)
+        {
+            lives--;
+            Destroy(enemy);
+        }
+    }
+
+    private void Heal(GameObject food)
+    {
+        if (lives < MAX_LIVES)
+        {
+            lives++;
+            Destroy(food);
+        }
+    }
+
+    private void GodMode(GameObject goldenFood)
+    {
+        isGodMode = true;
+        Destroy(goldenFood);
+        Invoke("EndGodMode", 10f);
+    }
+
+    private void EndGodMode()
+    {
+        isGodMode = false;
     }
 }
