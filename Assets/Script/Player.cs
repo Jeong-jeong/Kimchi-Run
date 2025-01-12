@@ -4,16 +4,17 @@ public class Player : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Movement Settings")]
-    [SerializeField] private float JumpForce;
+    [SerializeField] public float JumpForce;
     private const int MAX_JUMP_COUNT = 3;
     private const float GRAVITY_SCALE = 2.3f;
     private const int MAX_LIVES = 3;
-    public int lives = MAX_LIVES;
-    private bool isGodMode = false;
+    [SerializeField] public int lives = MAX_LIVES;
+    [SerializeField] public bool isGodMode = false;
 
     [Header("Components")]
     [SerializeField] private Rigidbody2D PlayerRigidBody;
     [SerializeField] private Animator PlayerAnimator;
+    [SerializeField] private BoxCollider2D PlayerCollider;
     private int JumpCount = 0;
     void Start()
     {
@@ -70,10 +71,15 @@ public class Player : MonoBehaviour
 
     private void Hit(GameObject enemy)
     {
-        if (lives > 0 && !isGodMode)
+        if (lives > 0)
         {
             lives--;
             Destroy(enemy);
+        }
+
+        if (lives == 0)
+        {
+            KillPlayer();
         }
     }
 
@@ -90,11 +96,18 @@ public class Player : MonoBehaviour
     {
         isGodMode = true;
         Destroy(goldenFood);
-        Invoke("EndGodMode", 10f);
+        Invoke("EndGodMode", 5f);
     }
 
     private void EndGodMode()
     {
         isGodMode = false;
+    }
+
+    private void KillPlayer()
+    {
+        PlayerCollider.enabled = false;
+        PlayerAnimator.enabled = false;
+        Jump();
     }
 }
