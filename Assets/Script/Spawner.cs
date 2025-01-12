@@ -10,7 +10,7 @@ public class Spawner : MonoBehaviour
     
     [Header("Spawner References")]
     public GameObject[] prefabs;
-    void Start()
+    void OnEnable()
     {
         InvokeSpawn();
     }
