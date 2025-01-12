@@ -4,6 +4,11 @@ public class Spawner : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Spawner Settings")]
+    public float minSpawnDelay;
+    public float maxSpawnDelay;
+
+    
+    [Header("Spawner References")]
     public GameObject[] prefabs;
     void Start()
     {
@@ -23,6 +28,6 @@ public class Spawner : MonoBehaviour
 
     void InvokeSpawn()
     {
-        Invoke("Spawn", 5f);
+        Invoke("Spawn", Random.Range(minSpawnDelay, maxSpawnDelay));
     }
 }
