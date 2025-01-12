@@ -5,7 +5,7 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Movement Settings")]
     [SerializeField] private float JumpForce;
-    private const int MAX_JUMP_COUNT = 2;
+    private const int MAX_JUMP_COUNT = 3;
     private const float GRAVITY_SCALE = 2.3f;
 
     [Header("Components")]
@@ -38,8 +38,24 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         JumpCount++;
-        float currentJumpForce = JumpCount == 1 ? JumpForce : JumpForce / JumpCount;
-        PlayerRigidBody.AddForceY(currentJumpForce, ForceMode2D.Impulse);
+        PlayerRigidBody.AddForceY(JumpForce, ForceMode2D.Impulse);
         PlayerAnimator.SetInteger("JumpCountState", JumpCount);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.tag == "Enemy")
+        {
+
+        }
+
+        if (collider.gameObject.tag == "Food")
+        {
+
+        }
+        if (collider.gameObject.tag == "GoldenFood")
+        {
+
+        }
     }
 }
