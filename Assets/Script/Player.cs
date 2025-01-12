@@ -7,8 +7,6 @@ public class Player : MonoBehaviour
     [SerializeField] public float JumpForce;
     private const int MAX_JUMP_COUNT = 3;
     private const float GRAVITY_SCALE = 2.3f;
-    private const int MAX_LIVES = 3;
-    [SerializeField] public int lives = MAX_LIVES;
     [SerializeField] public bool isGodMode = false;
 
     [Header("Components")]
@@ -71,13 +69,13 @@ public class Player : MonoBehaviour
 
     private void Hit(GameObject enemy)
     {
-        if (lives > 0)
+        if (GameManager.Instance.lives > 0)
         {
-            lives--;
+            GameManager.Instance.lives--;
             Destroy(enemy);
         }
 
-        if (lives == 0)
+        if (GameManager.Instance.lives == 0)
         {
             KillPlayer();
         }
@@ -85,9 +83,9 @@ public class Player : MonoBehaviour
 
     private void Heal(GameObject food)
     {
-        if (lives < MAX_LIVES)
+        if (GameManager.Instance.lives < GameManager.MAX_LIVES)
         {
-            lives++;
+            GameManager.Instance.lives++;
             Destroy(food);
         }
     }
@@ -104,7 +102,7 @@ public class Player : MonoBehaviour
         isGodMode = false;
     }
 
-    private void KillPlayer()
+    public void KillPlayer()
     {
         PlayerCollider.enabled = false;
         PlayerAnimator.enabled = false;

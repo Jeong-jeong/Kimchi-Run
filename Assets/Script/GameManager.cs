@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.Design;
 using UnityEngine;
 
@@ -18,8 +19,14 @@ public class GameManager : MonoBehaviour
     public GameObject GoldenFoodObject;
     public GameState CurrentGameState = GameState.Intro;
 
+    public const int MAX_LIVES = 3;
+    public int lives = MAX_LIVES;
+
+
+
     [Header("References")]
     public GameObject IntroUI;
+    public Player PlayerScript;
     void Awake()
     {
         if (Instance == null)
@@ -39,7 +46,14 @@ public class GameManager : MonoBehaviour
         {
             CurrentGameState = GameState.Playing;
             IntroUI.SetActive(false);
-            ActiveGameObjects();
+            SetActiveGameObjects(true);
+        }
+
+        if (CurrentGameState == GameState.Playing && lives == 0)
+        {
+            PlayerScript.KillPlayer();
+            SetActiveGameObjects(false);
+            CurrentGameState = GameState.GameOver;
         }
     }
 
@@ -47,11 +61,11 @@ public class GameManager : MonoBehaviour
     {
         return Input.GetKeyDown(KeyCode.Space);
     }
-    public void ActiveGameObjects()
+    public void SetActiveGameObjects(bool active)
     {
-        GameObject.SetActive(true);
-        EnemyObject.SetActive(true);
-        FoodObject.SetActive(true);
-        GoldenFoodObject.SetActive(true);
+        GameObject.SetActive(active);
+        EnemyObject.SetActive(active);
+        FoodObject.SetActive(active);
+        GoldenFoodObject.SetActive(active);
     }
 }
