@@ -7,7 +7,7 @@ public class Mover : MonoBehaviour
 
     void Start()
     {
-        Speed = 1f;
+        Speed = 2f;
     }
 
     // Update is called once per frame
