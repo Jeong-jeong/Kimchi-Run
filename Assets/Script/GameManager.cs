@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.Design;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -54,6 +55,12 @@ public class GameManager : MonoBehaviour
             PlayerScript.KillPlayer();
             SetActiveGameObjects(false);
             CurrentGameState = GameState.GameOver;
+        }
+
+
+        if (CurrentGameState == GameState.GameOver && PressSpace())
+        {
+            SceneManager.LoadScene("main");
         }
 
     }

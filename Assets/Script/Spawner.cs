@@ -15,6 +15,11 @@ public class Spawner : MonoBehaviour
         InvokeSpawn();
     }
 
+    void OnDisable()
+    {
+        CancelInvoke();
+    }
+
     void Spawn() {
         CreateObject();
         InvokeSpawn();
