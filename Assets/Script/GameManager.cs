@@ -13,7 +13,7 @@ public enum GameState
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public GameObject GameObject;
+    public GameObject buildingObject;
     public GameObject EnemyObject;
     public GameObject FoodObject;
     public GameObject GoldenFoodObject;
@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
             SetActiveGameObjects(false);
             CurrentGameState = GameState.GameOver;
         }
+
     }
 
     bool PressSpace()
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
     }
     public void SetActiveGameObjects(bool active)
     {
-        GameObject.SetActive(active);
+        buildingObject.SetActive(active);
         EnemyObject.SetActive(active);
         FoodObject.SetActive(active);
         GoldenFoodObject.SetActive(active);
