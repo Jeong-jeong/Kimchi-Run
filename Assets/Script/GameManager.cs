@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     public GameObject IntroUI;
+    public GameObject DeadUI;
     public Player PlayerScript;
     void Awake()
     {
@@ -55,6 +56,7 @@ public class GameManager : MonoBehaviour
             PlayerScript.KillPlayer();
             SetActiveGameObjects(false);
             CurrentGameState = GameState.GameOver;
+            DeadUI.SetActive(true);
         }
 
 
