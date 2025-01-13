@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject FoodObject;
     public GameObject GoldenFoodObject;
     public GameState CurrentGameState = GameState.Intro;
+    public float PlayStartTime;
 
     public const int MAX_LIVES = 3;
     public int lives = MAX_LIVES;
@@ -49,6 +50,8 @@ public class GameManager : MonoBehaviour
             CurrentGameState = GameState.Playing;
             IntroUI.SetActive(false);
             SetActiveGameObjects(true);
+            PlayStartTime = Time.time;
+
         }
 
         if (CurrentGameState == GameState.Playing && lives == 0)
@@ -65,6 +68,22 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("main");
         }
 
+    }
+
+    float CalculateScore()
+    {
+        return Time.time - PlayStartTime;
+    }
+
+    void SaveHighScore()
+    {
+        int score = Mathf.FloorToInt(CalculateScore());
+        int currentHighScore = PlayerPrefs.GetInt("highScore")
+        if (score > currentHighScore)
+        {
+            PlayerPrefs.SetInt("highScore", score);
+            PlayerPrefs.Save();
+        }
     }
 
     bool PressSpace()
