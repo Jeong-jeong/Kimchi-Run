@@ -57,12 +57,18 @@ public class GameManager : MonoBehaviour
             IntroUI.SetActive(false);
             SetActiveGameObjects(true);
             PlayStartTime = Time.time;
-
         }
 
         if (CurrentGameState == GameState.Playing) {
             scoreText.text = "Score: " + CalculateScore();
             SaveHighScore();
+
+            if (lives < MAX_LIVES)
+            {
+                SetFoodActive(true);
+            } else {
+                SetFoodActive(false);
+            }
         }
 
         if (CurrentGameState == GameState.Playing && lives == 0)
@@ -126,7 +132,11 @@ public class GameManager : MonoBehaviour
     {
         buildingObject.SetActive(active);
         EnemyObject.SetActive(active);
-        FoodObject.SetActive(active);
         GoldenFoodObject.SetActive(active);
+    }
+
+    private void SetFoodActive(bool active)
+    {
+        FoodObject.SetActive(active);
     }
 }
