@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] public float JumpForce;
     private const int MAX_JUMP_COUNT = 3;
-    private const float GRAVITY_SCALE = 2.3f;
+    private const float GRAVITY_SCALE = 3f;
     [SerializeField] public bool isGodMode = false;
 
     [Header("Components")]
