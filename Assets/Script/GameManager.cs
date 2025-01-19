@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
 
         if (CurrentGameState == GameState.Playing) {
             scoreText.text = "Score: " + CalculateScore();
+            SaveHighScore();
         }
 
         if (CurrentGameState == GameState.Playing && lives == 0)
@@ -69,6 +70,10 @@ public class GameManager : MonoBehaviour
             SetActiveGameObjects(false);
             CurrentGameState = GameState.GameOver;
             DeadUI.SetActive(true);
+        }
+
+        if (CurrentGameState == GameState.GameOver) {
+            scoreText.text = "High Score: " + GetHighScore();
         }
 
 
@@ -87,13 +92,18 @@ public class GameManager : MonoBehaviour
     void SaveHighScore()
     {
         int score = CalculateScore();
-        int currentHighScore = PlayerPrefs.GetInt("highScore");
+        int currentHighScore = GetHighScore();
         if (score > currentHighScore)
         {
             PlayerPrefs.SetInt("highScore", score);
             PlayerPrefs.Save();
         }
     }
+
+    int GetHighScore()
+    {
+        return PlayerPrefs.GetInt("highScore");
+    } 
 
     bool PressSpace()
     {
