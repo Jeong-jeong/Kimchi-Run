@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (CurrentGameState == GameState.GameOver) {
-            roundText.text = "High Score: " + GetHighScore();
+            roundText.text = "High Score Round: " + GetHighScore();
         }
 
 
@@ -102,12 +102,8 @@ public class GameManager : MonoBehaviour
     void SaveHighScore()
     {
         int round = CalculateRound();
-        int currentHighScore = GetHighScore();
-        if (round > currentHighScore)
-        {
-            PlayerPrefs.SetInt("highScoreRound", round);
-            PlayerPrefs.Save();
-        }
+        PlayerPrefs.SetInt("highScoreRound", round);
+        PlayerPrefs.Save();
     }
 
     int GetHighScore()
