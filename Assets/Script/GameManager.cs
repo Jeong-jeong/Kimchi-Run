@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.Design;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -104,6 +105,18 @@ public class GameManager : MonoBehaviour
     {
         return PlayerPrefs.GetInt("highScore");
     } 
+
+    public float CalculateGameSpeed()
+    {
+        const float BASE_SPEED = 10f;
+        const float INTERVAL_SECONDS = 7f;
+        if (CurrentGameState != GameState.Playing)
+        {
+            return BASE_SPEED;
+        }
+        float increasedSpeed = BASE_SPEED + (0.5f * Mathf.Floor(CalculateScore() / INTERVAL_SECONDS));
+        return increasedSpeed;
+    }
 
     bool PressSpace()
     {
