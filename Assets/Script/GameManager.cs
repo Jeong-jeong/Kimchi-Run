@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
         {
             return BASE_SPEED;
         }
-        float increasedSpeed = BASE_SPEED + (0.5f * CalculateRound());
+        float increasedSpeed = BASE_SPEED + CalculateRound();
         return increasedSpeed;
     }
 
