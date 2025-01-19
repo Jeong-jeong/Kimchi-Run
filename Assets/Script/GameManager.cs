@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     public GameObject IntroUI;
     public GameObject DeadUI;
     public Player PlayerScript;
-    public TMP_Text scoreText;
+    public TMP_Text roundText;
 
 
 
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (CurrentGameState == GameState.Playing) {
-            scoreText.text = "Score: " + CalculateScore();
+            roundText.text = "Round: " + CalculateRound();
             SaveHighScore();
 
             if (lives < MAX_LIVES)
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (CurrentGameState == GameState.GameOver) {
-            scoreText.text = "High Score: " + GetHighScore();
+            roundText.text = "High Score: " + GetHighScore();
         }
 
 
@@ -91,36 +91,38 @@ public class GameManager : MonoBehaviour
 
     }
 
-    int CalculateScore()
+    int CalculateRound()
     {
-        return Mathf.FloorToInt(Time.time - PlayStartTime);
+        const float INTERVAL_SECONDS = 7f;
+        const int FIRST_ROUND = 1;
+        Debug.Log($"Round: {Mathf.FloorToInt((Time.time - PlayStartTime) / INTERVAL_SECONDS + FIRST_ROUND)}");
+        return Mathf.FloorToInt((Time.time - PlayStartTime) / INTERVAL_SECONDS) + FIRST_ROUND;
     }
 
     void SaveHighScore()
     {
-        int score = CalculateScore();
+        int round = CalculateRound();
         int currentHighScore = GetHighScore();
-        if (score > currentHighScore)
+        if (round > currentHighScore)
         {
-            PlayerPrefs.SetInt("highScore", score);
+            PlayerPrefs.SetInt("highScoreRound", round);
             PlayerPrefs.Save();
         }
     }
 
     int GetHighScore()
     {
-        return PlayerPrefs.GetInt("highScore");
+        return PlayerPrefs.GetInt("highScoreRound");
     } 
 
     public float CalculateGameSpeed()
     {
         const float BASE_SPEED = 10f;
-        const float INTERVAL_SECONDS = 7f;
         if (CurrentGameState != GameState.Playing)
         {
             return BASE_SPEED;
         }
-        float increasedSpeed = BASE_SPEED + (0.5f * Mathf.Floor(CalculateScore() / INTERVAL_SECONDS));
+        float increasedSpeed = BASE_SPEED + (0.5f * CalculateRound());
         return increasedSpeed;
     }
 
