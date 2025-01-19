@@ -14,6 +14,17 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator PlayerAnimator;
     [SerializeField] private BoxCollider2D PlayerCollider;
     private int JumpCount = 0;
+
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip godModeClip;
+    [SerializeField] private AudioClip hitClip;
+    [SerializeField] private AudioClip healClip;
+    [SerializeField] private AudioClip gameOverClip;
+
+
     void Start()
     {
         PlayerRigidBody.gravityScale = GRAVITY_SCALE;
@@ -42,6 +53,7 @@ public class Player : MonoBehaviour
         JumpCount++;
         PlayerRigidBody.AddForceY(JumpForce, ForceMode2D.Impulse);
         PlayerAnimator.SetInteger("JumpCountState", JumpCount);
+        audioSource.PlayOneShot(jumpClip);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -71,6 +83,7 @@ public class Player : MonoBehaviour
     {
         if (GameManager.Instance.lives > 0)
         {
+            audioSource.PlayOneShot(hitClip);
             GameManager.Instance.lives--;
             Destroy(enemy);
         }
@@ -86,6 +99,7 @@ public class Player : MonoBehaviour
         if (GameManager.Instance.lives < GameManager.MAX_LIVES)
         {
             GameManager.Instance.lives++;
+            audioSource.PlayOneShot(healClip);
             Destroy(food);
         }
     }
@@ -94,6 +108,7 @@ public class Player : MonoBehaviour
     {
         isGodMode = true;
         PlayerAnimator.SetBool("GodMode", true);
+        audioSource.PlayOneShot(godModeClip);
         Destroy(goldenFood);
         Invoke("EndGodMode", 5f);
     }
@@ -108,6 +123,8 @@ public class Player : MonoBehaviour
     {
         PlayerCollider.enabled = false;
         PlayerAnimator.enabled = false;
+        audioSource.PlayOneShot(gameOverClip);
+        GameManager.Instance.StopBGM();
         Jump();
     }
 }

@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject EnemyObject;
     public GameObject FoodObject;
     public GameObject GoldenFoodObject;
+    public AudioSource bgmSource;
     public GameState CurrentGameState = GameState.Intro;
     public float PlayStartTime;
 
@@ -136,5 +137,13 @@ public class GameManager : MonoBehaviour
     private void SetFoodActive(bool active)
     {
         FoodObject.SetActive(active);
+    }
+
+    public void StopBGM()
+    {
+        if (bgmSource)
+        {
+            bgmSource.Stop();
+        }
     }
 }
