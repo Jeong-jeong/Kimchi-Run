@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] public float JumpForce;
     private const int MAX_JUMP_COUNT = 3;
-    private const float GRAVITY_SCALE = 3f;
+    private const float GRAVITY_SCALE = 3.5f;
     [SerializeField] public bool isGodMode = false;
 
     [Header("Components")]
@@ -93,6 +93,7 @@ public class Player : MonoBehaviour
     private void GodMode(GameObject goldenFood)
     {
         isGodMode = true;
+        PlayerAnimator.SetBool("GodMode", true);
         Destroy(goldenFood);
         Invoke("EndGodMode", 5f);
     }
@@ -100,6 +101,7 @@ public class Player : MonoBehaviour
     private void EndGodMode()
     {
         isGodMode = false;
+        PlayerAnimator.SetBool("GodMode", false);
     }
 
     public void KillPlayer()
