@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.Design;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,6 +31,10 @@ public class GameManager : MonoBehaviour
     public GameObject IntroUI;
     public GameObject DeadUI;
     public Player PlayerScript;
+    public TMP_Text scoreText;
+
+
+
     void Awake()
     {
         if (Instance == null)
@@ -54,6 +59,10 @@ public class GameManager : MonoBehaviour
 
         }
 
+        if (CurrentGameState == GameState.Playing) {
+            scoreText.text = "Score: " + CalculateScore();
+        }
+
         if (CurrentGameState == GameState.Playing && lives == 0)
         {
             PlayerScript.KillPlayer();
@@ -70,15 +79,15 @@ public class GameManager : MonoBehaviour
 
     }
 
-    float CalculateScore()
+    int CalculateScore()
     {
-        return Time.time - PlayStartTime;
+        return Mathf.FloorToInt(Time.time - PlayStartTime);
     }
 
     void SaveHighScore()
     {
-        int score = Mathf.FloorToInt(CalculateScore());
-        int currentHighScore = PlayerPrefs.GetInt("highScore")
+        int score = CalculateScore();
+        int currentHighScore = PlayerPrefs.GetInt("highScore");
         if (score > currentHighScore)
         {
             PlayerPrefs.SetInt("highScore", score);
